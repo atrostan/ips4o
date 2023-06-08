@@ -5,8 +5,9 @@ project(ips4o)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 include(default_build_type)
-
+set(_REENTRANT 1)
 SET(CMAKE_CXX_STANDARD 14)
+add_compile_definitions(__TBB_DYNAMIC_LOAD_ENABLED=0)
 
 add_library(ips4o INTERFACE)
 target_include_directories(ips4o INTERFACE include/)
@@ -43,7 +44,7 @@ if (NOT IPS4O_DISABLE_PARALLEL)
   find_package (Threads REQUIRED)
   target_link_libraries(ips4o INTERFACE Threads::Threads)
 
-  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/extern/cmake-modules)
+  # list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/extern/cmake-modules)
   find_package(TBB REQUIRED)
   target_link_libraries(ips4o INTERFACE TBB::tbb)
 
